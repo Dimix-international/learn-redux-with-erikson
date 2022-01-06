@@ -1,0 +1,32 @@
+.navbar {
+    height: 70px;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4rem;
+}
+.navbar h2 {
+    font-size: 40px;
+}
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+}
+.navBag {
+    display: flex;
+    align-items: center;
+}
+.bagQuantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    background-color: yellow;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    color:#000;
+    margin-left: 5px;
+}

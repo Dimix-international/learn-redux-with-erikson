@@ -1,0 +1,12 @@
+.continueShopping {
+    margin-top: 1rem;
+}
+.continueShopping a {
+    color: grey;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.continueShopping span {
+    margin-left: 0.5rem;
+}
