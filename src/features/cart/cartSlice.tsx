@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ItemType} from "../producrs/products-slice";
+
 import {toast} from "react-toastify";
+import {ItemType} from "../producrs/products-api";
 
 export interface CartState {
     cartItems: Array<ItemType & { cartQuantity: number }>,
@@ -35,12 +36,54 @@ const cartSlice = createSlice({
                     position: "bottom-left"
                 });
             }
-            state.cartTotalQuantity++;
-            state.cartTotalAmount += action.payload.price;
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+            /*            state.cartTotalQuantity++;
+                        state.cartTotalAmount += action.payload.price;*/
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
+        removeFromCart(state, action: PayloadAction<ItemType>) {
+            state.cartItems = state.cartItems.filter(item =>
+                item.id !== action.payload.id
+            );
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+            toast.error(`${action.payload.name} removed from cart`, {
+                position: "bottom-left"
+            });
+        },
+        decreaseCart(state, action: PayloadAction<ItemType>) {
+            const index = state.cartItems.findIndex(cart =>
+                cart.id === action.payload.id
+            );
+            if (index > -1) {
+                if (state.cartItems[index].cartQuantity > 1) {
+                    state.cartItems[index].cartQuantity--;
+                    toast.info(`Decreased ${action.payload.name} cart quantity`, {
+                        position: "bottom-left"
+                    });
+                } else if (state.cartItems[index].cartQuantity === 1) {
+                    state.cartItems = state.cartItems.filter(item =>
+                        item.id !== action.payload.id
+                    );
+                    toast.error(`${action.payload.name} removed from cart`, {
+                        position: "bottom-left"
+                    });
+                }
+                localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+            }
+        },
+        clearCart(state, action: PayloadAction<void>) {
+            state.cartItems = [];
+            toast.error(`Cart is cleared`, {
+                position: "bottom-left"
+            });
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         }
     }
 })
 
-export const {addToCart} = cartSlice.actions;
+export const {
+    addToCart,
+    removeFromCart,
+    decreaseCart,
+    clearCart
+} = cartSlice.actions;
 export default cartSlice.reducer

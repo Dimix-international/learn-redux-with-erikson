@@ -74,6 +74,7 @@
     background: none;
     padding: 0.7rem 1.5rem;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
 .count {

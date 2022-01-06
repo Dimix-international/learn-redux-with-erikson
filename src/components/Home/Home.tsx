@@ -1,7 +1,9 @@
-import {useGetAllProductsQuery} from "../../features/producrs/products-api";
+import {
+    ItemType,
+    useGetAllProductsQuery
+} from "../../features/producrs/products-api";
 import s from './Home.module.css'
-import React from "react";
-import {ItemType} from "../../features/producrs/products-slice";
+import React, {useCallback} from "react";
 import {useAppDispatch} from "../../app/hooks";
 import {addToCart} from "../../features/cart/cartSlice";
 import {useNavigate} from "react-router-dom";
@@ -18,7 +20,6 @@ export const Home = React.memo(() => {
         dispatch(addToCart(product));
         navigate('/cart')
     }
-
     return (
         <div className={s.container}>
             {

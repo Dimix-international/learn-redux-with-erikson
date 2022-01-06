@@ -3,13 +3,19 @@ import s from "./CartWithGoods.module.css";
 import {CartState} from "../../features/cart/cartSlice";
 import {Button} from "../common/Button/Button";
 import {ArrowLeft} from "../common/ArrowLeft/ArrowLeft";
+import {ItemType} from "../../features/producrs/products-api";
 
 type CartWithGoodsType = {
     cart: CartState
+    removeCart: (product: ItemType) => void
+    decreaseCart: (product: ItemType) => void
+    increaseCart: (product: ItemType) => void
+    clearCart: () => void
 }
-export const CartWithGoods:React.FC<CartWithGoodsType> = React.memo( (props) => {
+export const CartWithGoods: React.FC<CartWithGoodsType> = React.memo((props) => {
 
-    const {cart} = props;
+    const {cart, removeCart, decreaseCart, increaseCart, clearCart} = props;
+
 
     return (
         <div>
@@ -28,14 +34,19 @@ export const CartWithGoods:React.FC<CartWithGoodsType> = React.memo( (props) => 
                                 <div>
                                     <h3>{item.name}</h3>
                                     <p>{item.description}</p>
-                                    <button>Remove</button>
+                                    <button
+                                        onClick={() => removeCart(item)}>Remove
+                                    </button>
                                 </div>
                             </div>
                             <div className={s.productPrice}>${item.price}</div>
                             <div className={s.productQuantity}>
-                                <button>-</button>
-                                <div className={s.count}>{item.cartQuantity}</div>
-                                <button>+</button>
+                                <button onClick={() => decreaseCart(item)}>-
+                                </button>
+                                <div
+                                    className={s.count}>{item.cartQuantity}</div>
+                                <button onClick={() => increaseCart(item)}>+
+                                </button>
                             </div>
                             <div className={s.totalPrice}>
                                 ${item.price * item.cartQuantity}
@@ -45,7 +56,12 @@ export const CartWithGoods:React.FC<CartWithGoodsType> = React.memo( (props) => 
                 }
             </div>
             <div className={s.cartSummary}>
-                <button className={s.clearCart}>Clear Cart</button>
+                <button
+                    className={s.clearCart}
+                    onClick={() => clearCart()}
+                >
+                    Clear Cart
+                </button>
                 <div className={s.cartCheckout}>
                     <div className={s.subtotal}>
                         <span>Subtotal</span>
@@ -56,10 +72,11 @@ export const CartWithGoods:React.FC<CartWithGoodsType> = React.memo( (props) => 
                     <p>Taxes and shipping calculated at checkout</p>
                     <Button
                         text={'Check out'}
-                        callback={() => {}}
+                        callback={() => {
+                        }}
                         addClass={s.btn}
                     />
-                    <ArrowLeft to={'/'} text={'Continue shopping'} />
+                    <ArrowLeft to={'/'} text={'Continue shopping'}/>
                 </div>
             </div>
         </div>

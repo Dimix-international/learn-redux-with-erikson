@@ -1,6 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
-import {ItemType} from "./products-slice";
 
+export type ItemType = {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    image: string,
+}
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
