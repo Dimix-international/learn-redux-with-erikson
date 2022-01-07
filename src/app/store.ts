@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import counterReducer from '../features/counter/counter-slice'
 import {apiSlice} from "../features/dogs/dogs-api";
 import {productsApi} from "../features/producrs/products-api";
-import cartSlice from "../features/cart/cartSlice";
+import cartSlice, {getTotals} from "../features/cart/cartSlice";
 
 export const store = configureStore({
     reducer: {
@@ -18,6 +18,7 @@ export const store = configureStore({
         );
     }
 })
+
 
 
 export type AppDispatch = typeof store.dispatch;

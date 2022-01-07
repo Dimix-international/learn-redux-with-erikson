@@ -1,11 +1,11 @@
-import React, {useCallback} from "react"
+import React, {useCallback, useEffect} from "react"
 import s from './Cart.module.css'
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {EmptyCart} from "./EmptyCart";
 import {CartWithGoods} from "./CartWithGoods";
 import {
     addToCart, clearCart,
-    decreaseCart,
+    decreaseCart, getTotals,
     removeFromCart
 } from "../../features/cart/cartSlice";
 import {ItemType} from "../../features/producrs/products-api";
@@ -14,10 +14,11 @@ import {ItemType} from "../../features/producrs/products-api";
 export const Cart = React.memo(() => {
 
         const cart = useAppSelector(state => state.cart);
+        const totalQuantity = useAppSelector(state => state.cart.cartTotalQuantity);
         const dispatch = useAppDispatch();
 
         const removeCartHandler = useCallback((product: ItemType) => {
-            dispatch(removeFromCart(product))
+            dispatch(removeFromCart(product));
         }, []);
 
         const decreaseQuantityCartHandler = useCallback((product: ItemType) => {
@@ -31,6 +32,11 @@ export const Cart = React.memo(() => {
         const clearCartHandler = useCallback(() => {
             dispatch(clearCart())
         }, []);
+
+        useEffect(() => {
+            dispatch(getTotals());
+        },[totalQuantity])
+
 
         return (
             <div className={s.container}>

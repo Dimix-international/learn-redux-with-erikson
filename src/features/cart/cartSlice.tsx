@@ -36,15 +36,19 @@ const cartSlice = createSlice({
                     position: "bottom-left"
                 });
             }
-            /*            state.cartTotalQuantity++;
-                        state.cartTotalAmount += action.payload.price;*/
+            state.cartTotalQuantity++;
+            state.cartTotalAmount += action.payload.price;
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         },
         removeFromCart(state, action: PayloadAction<ItemType>) {
             state.cartItems = state.cartItems.filter(item =>
                 item.id !== action.payload.id
             );
+
+            state.cartTotalQuantity = state.cartItems.length;
+
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+
             toast.error(`${action.payload.name} removed from cart`, {
                 position: "bottom-left"
             });
@@ -67,6 +71,8 @@ const cartSlice = createSlice({
                         position: "bottom-left"
                     });
                 }
+                state.cartTotalQuantity--;
+                state.cartTotalAmount -= action.payload.price;
                 localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
             }
         },
@@ -75,7 +81,29 @@ const cartSlice = createSlice({
             toast.error(`Cart is cleared`, {
                 position: "bottom-left"
             });
+            state.cartTotalQuantity = 0;
+            state.cartTotalAmount = 0;
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
+        getTotals(state, action: PayloadAction<void>) {
+            let {
+                total,
+                quantity
+            } = state.cartItems.reduce((cartTotal, cartItem) => {
+                const {price, cartQuantity} = cartItem;
+                const itemTotal = price * cartQuantity;
+
+                cartTotal.total += itemTotal;
+                cartTotal.quantity += cartQuantity;
+
+                return cartTotal;
+            }, {
+                total: 0,
+                quantity: 0,
+            });
+
+            state.cartTotalQuantity = quantity;
+            state.cartTotalAmount = total;
         }
     }
 })
@@ -84,6 +112,7 @@ export const {
     addToCart,
     removeFromCart,
     decreaseCart,
-    clearCart
+    clearCart,
+    getTotals,
 } = cartSlice.actions;
 export default cartSlice.reducer
