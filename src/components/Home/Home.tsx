@@ -3,21 +3,21 @@ import {
     useGetAllProductsQuery
 } from "../../features/producrs/products-api";
 import s from './Home.module.css'
-import React, {useCallback} from "react";
-import {useAppDispatch} from "../../app/hooks";
-import {addToCart} from "../../features/cart/cartSlice";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../common/Button/Button";
+import {useCart} from "../../hooks/hooks-cart";
 
 
 export const Home = React.memo(() => {
 
     const {data, error, isLoading} = useGetAllProductsQuery();
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const {dispatch} = useCart()
+
     const handleAddCart = (product: ItemType) => {
-        dispatch(addToCart(product));
+        dispatch({type:'add-to-card', payload:product})
         navigate('/cart')
     }
     return (

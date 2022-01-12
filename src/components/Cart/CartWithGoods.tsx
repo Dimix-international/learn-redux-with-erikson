@@ -13,9 +13,7 @@ type CartWithGoodsType = {
     clearCart: () => void
 }
 export const CartWithGoods: React.FC<CartWithGoodsType> = React.memo((props) => {
-
     const {cart, removeCart, decreaseCart, increaseCart, clearCart} = props;
-
 
     return (
         <div>

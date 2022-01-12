@@ -4,23 +4,22 @@ import {NavBar} from "./components/NavBar/NavBar";
 import {ToastContainer} from "react-toastify";
 import {MyRoutes} from "./components/MyRoutes/MyRoutes";
 import {useEffect} from "react";
-import {getTotals} from "./features/cart/cartSlice";
-import {useAppDispatch} from "./app/hooks";
+import {useCart} from "./hooks/hooks-cart";
 
 
 function App() {
 
-    const dispatch = useAppDispatch();
+    const {dispatch} = useCart();
 
     useEffect(() => {
-        dispatch(getTotals())
-    },[])
+        dispatch({type:'get-totals'})
+    }, [])
 
     return (
         <div>
             <ToastContainer/>
             <NavBar/>
-            <MyRoutes />
+            <MyRoutes/>
         </div>
     )
 }

@@ -1,41 +1,33 @@
 import React, {useCallback, useEffect} from "react"
 import s from './Cart.module.css'
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {EmptyCart} from "./EmptyCart";
 import {CartWithGoods} from "./CartWithGoods";
-import {
-    addToCart, clearCart,
-    decreaseCart, getTotals,
-    removeFromCart
-} from "../../features/cart/cartSlice";
 import {ItemType} from "../../features/producrs/products-api";
+import {useCart} from "../../hooks/hooks-cart";
 
 
 export const Cart = React.memo(() => {
-
-        const cart = useAppSelector(state => state.cart);
-        const totalQuantity = useAppSelector(state => state.cart.cartTotalQuantity);
-        const dispatch = useAppDispatch();
+        const {state: cart, dispatch: dispatchContext} = useCart();
 
         const removeCartHandler = useCallback((product: ItemType) => {
-            dispatch(removeFromCart(product));
+            dispatchContext({type:'remove-from-cart', payload: product});
         }, []);
 
         const decreaseQuantityCartHandler = useCallback((product: ItemType) => {
-            dispatch(decreaseCart(product))
+            dispatchContext({type: 'decrease-cart', payload:product})
         }, []);
 
         const increaseQuantityCartHandler = useCallback((product: ItemType) => {
-            dispatch(addToCart(product))
+            dispatchContext({type:'add-to-card', payload:product})
         }, []);
 
         const clearCartHandler = useCallback(() => {
-            dispatch(clearCart())
+            dispatchContext({type: 'clear-cart'})
         }, []);
 
         useEffect(() => {
-            dispatch(getTotals());
-        },[totalQuantity])
+            dispatchContext({type: 'get-totals'});
+        }, [cart.cartTotalQuantity])
 
 
         return (

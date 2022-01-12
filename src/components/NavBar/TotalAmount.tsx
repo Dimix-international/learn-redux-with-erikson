@@ -1,11 +1,11 @@
 import React from "react";
-import {useAppSelector} from "../../app/hooks";
+import {useCart} from "../../hooks/hooks-cart";
 
 
 export const TotalAmount = React.memo(() => {
+    const {state} = useCart();
 
-    const totalQuantity = useAppSelector(state => state.cart.cartTotalQuantity);
     return (
-        <span>{totalQuantity}</span>
+        <span>{state.cartTotalQuantity}</span>
     )
 })

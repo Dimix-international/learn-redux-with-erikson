@@ -1,8 +1,7 @@
 import s from './NavBar.module.css'
 import {Link} from 'react-router-dom'
-import {pathRoutes} from "../MyRoutes/MyRoutes";
+import {PathRoutesType} from "../MyRoutes/MyRoutes";
 import React from "react";
-import {useAppSelector} from "../../app/hooks";
 import {TotalAmount} from "./TotalAmount";
 
 
@@ -10,10 +9,10 @@ export const NavBar = React.memo(() => {
 
     return (
         <nav className={s.navbar}>
-            <Link to={pathRoutes.HOME}>
+            <Link to={PathRoutesType.Home}>
                 <h2>OnlineShop</h2>
             </Link>
-            <Link to={pathRoutes.CART}>
+            <Link to={PathRoutesType.Cart}>
                 <div className={s.navBag}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
