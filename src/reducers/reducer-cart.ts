@@ -72,9 +72,11 @@ export const counterReducer = (state: CartState, action: CartActionType): CartSt
         return {...copyState}
     };
     const removeFromCart = () => {
-        if(action.payload) {
+        if (action.payload) {
             copyState.cartItems = copyState.cartItems.filter(item => item.id !== action.payload?.id);
-            copyState.cartTotalQuantity = copyState.cartItems.length;
+            copyState.cartTotalQuantity = copyState.cartItems.reduce((acc, cart) => {
+                return acc += cart.cartQuantity
+            }, 0)
             localStorage.setItem('cartItems', JSON.stringify(copyState.cartItems));
             toast.error(`${action.payload.name} removed from cart`, {
                 position: "bottom-left"
@@ -84,16 +86,16 @@ export const counterReducer = (state: CartState, action: CartActionType): CartSt
         }
     };
     const decreaseCart = () => {
-        if(action.payload) {
+        if (action.payload) {
             const index = copyState.cartItems.findIndex(item => item.id === action.payload?.id);
 
-            if(index > -1) {
-                if(copyState.cartItems[index].cartQuantity > 1) {
+            if (index > -1) {
+                if (copyState.cartItems[index].cartQuantity > 1) {
                     copyState.cartItems[index].cartQuantity--;
                     toast.info(`Decreased ${action.payload.name} cart quantity`, {
                         position: "bottom-left"
                     });
-                } else{
+                } else {
                     copyState.cartItems = copyState.cartItems.filter(item =>
                         item.id !== action.payload?.id
                     );
@@ -102,7 +104,7 @@ export const counterReducer = (state: CartState, action: CartActionType): CartSt
                     });
                 }
                 copyState.cartTotalQuantity--;
-                copyState.cartTotalAmount -=action.payload.price;
+                copyState.cartTotalAmount -= action.payload.price;
                 localStorage.setItem('cartItems', JSON.stringify(copyState.cartItems));
 
                 return {...copyState}

@@ -12,7 +12,7 @@ function App() {
     const {dispatch} = useCart();
 
     useEffect(() => {
-        dispatch({type:'get-totals'})
+        dispatch({type: 'get-totals'})
     }, [])
 
     return (

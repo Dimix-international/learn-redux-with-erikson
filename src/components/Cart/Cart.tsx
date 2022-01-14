@@ -1,34 +1,17 @@
-import React, {useCallback, useEffect} from "react"
+import React from "react"
 import s from './Cart.module.css'
 import {EmptyCart} from "./EmptyCart";
 import {CartWithGoods} from "./CartWithGoods";
-import {ItemType} from "../../features/producrs/products-api";
-import {useCart} from "../../hooks/hooks-cart";
+import {useGetCard} from "../../hooks/useGetCard";
 
 
 export const Cart = React.memo(() => {
-        const {state: cart, dispatch: dispatchContext} = useCart();
-
-        const removeCartHandler = useCallback((product: ItemType) => {
-            dispatchContext({type:'remove-from-cart', payload: product});
-        }, []);
-
-        const decreaseQuantityCartHandler = useCallback((product: ItemType) => {
-            dispatchContext({type: 'decrease-cart', payload:product})
-        }, []);
-
-        const increaseQuantityCartHandler = useCallback((product: ItemType) => {
-            dispatchContext({type:'add-to-card', payload:product})
-        }, []);
-
-        const clearCartHandler = useCallback(() => {
-            dispatchContext({type: 'clear-cart'})
-        }, []);
-
-        useEffect(() => {
-            dispatchContext({type: 'get-totals'});
-        }, [cart.cartTotalQuantity])
-
+    const {cart,
+        clearCartHandler,
+        decreaseQuantityCartHandler,
+        removeCartHandler,
+        increaseQuantityCartHandler
+    } = useGetCard();
 
         return (
             <div className={s.container}>

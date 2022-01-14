@@ -45,7 +45,9 @@ const cartSlice = createSlice({
                 item.id !== action.payload.id
             );
 
-            state.cartTotalQuantity = state.cartItems.length;
+            state.cartTotalQuantity = state.cartItems.reduce((acc, cart) => {
+                return acc += cart.cartQuantity
+            }, 0)
 
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
 

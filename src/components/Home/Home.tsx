@@ -7,17 +7,19 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../common/Button/Button";
 import {useCart} from "../../hooks/hooks-cart";
+import {useFetchCards} from "../../hooks/react-query/useFetchCards";
+import {AxiosError} from "axios";
 
 
 export const Home = React.memo(() => {
 
-    const {data, error, isLoading} = useGetAllProductsQuery();
+    const {data = [], isLoading, error} = useFetchCards();
     const navigate = useNavigate();
 
     const {dispatch} = useCart()
 
     const handleAddCart = (product: ItemType) => {
-        dispatch({type:'add-to-card', payload:product})
+        dispatch({type: 'add-to-card', payload: product})
         navigate('/cart')
     }
     return (
@@ -26,12 +28,12 @@ export const Home = React.memo(() => {
                 isLoading
                     ? <div>Loading...</div>
                     : error
-                    ? <div>{(error as any).data || 'some error'}</div>
+                    ? <div>{(error as AxiosError).message || 'some error'}</div>
                     : <>
                         <h2>New Arrivals</h2>
                         <div className={s.products}>
                             {
-                                data?.map(product => (
+                                data.map(product => (
                                     <div
                                         key={product.id}
                                         className={s.product}
