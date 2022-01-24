@@ -1,9 +1,8 @@
 import React from "react";
 import s from "./CartWithGoods.module.css";
-import {CartState} from "../../features/cart/cartSlice";
 import {Button} from "../common/Button/Button";
 import {ArrowLeft} from "../common/ArrowLeft/ArrowLeft";
-import {ItemType} from "../../features/producrs/products-api";
+import {CartState, ItemType} from "../../reducers/reducer-cart";
 
 type CartWithGoodsType = {
     cart: CartState

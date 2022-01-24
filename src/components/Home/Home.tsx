@@ -1,7 +1,3 @@
-import {
-    ItemType,
-    useGetAllProductsQuery
-} from "../../features/producrs/products-api";
 import s from './Home.module.css'
 import React from "react";
 import {useNavigate} from "react-router-dom";
@@ -9,6 +5,7 @@ import {Button} from "../common/Button/Button";
 import {useCart} from "../../hooks/hooks-cart";
 import {useFetchCards} from "../../hooks/react-query/useFetchCards";
 import {AxiosError} from "axios";
+import {ItemType} from "../../reducers/reducer-cart";
 
 
 export const Home = React.memo(() => {

@@ -1,6 +1,5 @@
-import {ItemType} from "../features/producrs/products-api";
 import React from "react";
-import {CartState} from "../features/cart/cartSlice";
+import {CartState, ItemType} from "../reducers/reducer-cart";
 
 
 export enum CartActionOperationType {

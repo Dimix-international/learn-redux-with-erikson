@@ -1,6 +1,6 @@
-import {ItemType} from "../features/producrs/products-api";
 import {useCallback, useEffect} from "react";
 import {useCart} from "./hooks-cart";
+import {ItemType} from "../reducers/reducer-cart";
 
 
 export const useGetCard = () => {

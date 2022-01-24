@@ -1,5 +1,6 @@
 import axios from "axios";
-import {ItemType} from "../features/producrs/products-api";
+import {ItemType} from "../reducers/reducer-cart";
+
 
 const instance = axios.create({
     baseURL:'http://localhost:5000/',

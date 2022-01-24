@@ -1,6 +1,19 @@
 import {CartActionOperationType, CartActionType} from "../context/cart-context";
-import {CartState} from "../features/cart/cartSlice";
 import {toast} from "react-toastify";
+
+export type ItemType = {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    image: string,
+}
+
+export interface CartState {
+    cartItems: Array<ItemType & { cartQuantity: number }>,
+    cartTotalQuantity: number,
+    cartTotalAmount: number
+}
 
 export type CartReducerReturnType = {
     [key in `${CartActionOperationType}`]: () => CartState
